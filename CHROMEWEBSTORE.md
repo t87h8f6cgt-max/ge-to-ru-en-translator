@@ -143,15 +143,16 @@ Hosted via GitHub Pages from this repository.
 
 **Publisher Name** [REQUIRED]
 
-⬜ TODO — your Chrome Web Store publisher / legal name
+Aleksandr Anisimov
 
 **Contact Email** [REQUIRED]
 
-⬜ TODO — public contact email for the listing
+Aikhienvald@icloud.com
 
 **Support URL / Email** [RECOMMENDED]
 
-https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues
+https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues  
+Also: Aikhienvald@icloud.com
 
 **Homepage URL** [RECOMMENDED]
 
@@ -180,9 +181,9 @@ https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator
 
 ### Pre-submit checklist (quick)
 
-- [ ] Host privacy policy URL and set it above + in CWS dashboard
-- [ ] Fill publisher name + contact email
-- [ ] Add ≥1 store screenshot
+- [ ] Host privacy policy URL and set it above + in CWS dashboard — done (GitHub Pages)
+- [x] Fill publisher name + contact email
+- [x] Add ≥1 store screenshot
 - [ ] Build ZIP excluding `.git/`, `glossary-data/`, `CHROMEWEBSTORE.md`, `.cursor/`, `.agents/`, `README.md` (optional exclude), `node_modules/`
 - [ ] Confirm single purpose matches listing and code
 - [ ] Copy permission justifications into CWS permission justification fields

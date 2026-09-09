@@ -1,35 +1,35 @@
 # GE to RU/EN translator
 
-Chrome MV3 extension (formerly KA-RU-Transl): Georgian (ka) → English / Russian for pages, iframes, native dialogs, and PDFs (including local `file://` with “Allow access to file URLs”).
+Chrome extension that translates **Georgian** websites and PDFs into **Russian** or **English** — useful for government portals and everyday pages in Georgia (rs.ge, my.gov.ge, and others).
 
-## Load unpacked
+## What it does
 
-1. Open `chrome://extensions` → Developer mode → **Load unpacked** → this folder.
-2. For local PDFs: extension details → enable **Allow access to file URLs**.
+- Translates the current page, including text that appears later in popups and forms  
+- Works inside nested frames when a site embeds other services  
+- Translates native browser confirm/alert dialogs when they contain Georgian text  
+- Opens a side panel to extract and translate PDF text (online or from your computer)
 
-## Use
+## How to use
 
-- Toggle power on, pick EN or RU, then **Перевести страницу** or **Перевести PDF**.
-- **Вернуть оригинал** restores API-replaced DOM text on the page.
+1. Install the extension from the [Chrome Web Store](https://chrome.google.com/webstore) (listing coming soon) or load it unpacked for testing.  
+2. Click the extension icon and turn the power switch **on**.  
+3. Choose **English** or **Русский**.  
+4. Press **Перевести страницу** — or **Перевести PDF** if you have a PDF open.  
+5. Use **Вернуть оригинал** to restore the page text after on-page translation.
+
+### Local PDF files
+
+If the PDF is opened from disk (`file://…`), open `chrome://extensions`, find **GE to RU/EN translator**, and enable **Allow access to file URLs**.
 
 ## Privacy
 
-Public policy: https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/privacy.html — also [privacy.html](privacy.html) in-repo. Text is sent to `translate.googleapis.com` when not covered by the packed glossary/cache. No remote script injection.
+Some page or PDF text may be sent to Google’s translate service when it is not covered by the built-in glossary. Settings stay on your device.
 
-## Chrome Web Store
+Full policy: [Privacy Policy](https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/privacy.html)
 
-- Listing copy, permission justifications, and privacy answers: [CHROMEWEBSTORE.md](CHROMEWEBSTORE.md)
-- Agent skill (MV3 / publish guidance): `.agents/skills/chrome-extensions/`
-- Package for upload:
+## Support
 
-```bash
-bash scripts/package-extension.sh
-```
+- Email: [Aikhienvald@icloud.com](mailto:Aikhienvald@icloud.com)  
+- Issues: [GitHub Issues](https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues)
 
-Before submit: host `privacy.html` publicly, fill publisher/email TODOs in `CHROMEWEBSTORE.md`, add ≥1 store screenshot.
-
-## Dev notes
-
-- `glossary-data/` is harvest source material — gitignored; do **not** ship it in the Store zip.
-- Packed glossary lives in `glossary-generated.js` + `glossary.js`.
-- Version is in `manifest.json`.
+Publisher: **Aleksandr Anisimov**
