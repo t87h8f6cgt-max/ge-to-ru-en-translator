@@ -2,6 +2,14 @@
 
 Chrome extension that translates **Georgian** websites and PDFs into **Russian** or **English** — useful for government portals and everyday pages in Georgia (rs.ge, my.gov.ge, and others).
 
+## Why it exists / Зачем это нужно
+
+Made for Russian- and English-speaking people who need to use Georgian sites that have no built-in page translation — or where the built-in one is wrong or incomplete. The translator is tuned for the sites people open most often (especially e-gov and everyday services).
+
+Расширение создано для русскоязычных и англоязычных пользователей — в основном чтобы удобнее пользоваться сайтами без нормального встроенного перевода страниц (или когда он работает плохо). Переводчик заточен под самые часто используемые сайты.
+
+This is my first Chrome extension. Feedback is welcome — please be kind if something is rough around the edges.
+
 ## What it does
 
 - Translates the current page, including text that appears later in popups and forms  

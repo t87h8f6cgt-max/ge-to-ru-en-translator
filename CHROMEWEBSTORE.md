@@ -19,7 +19,7 @@ Translate Georgian pages, dialogs and PDFs to Russian or English — handy for g
 
 **Detailed Description** [REQUIRED]
 
-GE to RU/EN translator helps you read Georgian (ka) websites in English or Russian without leaving the page.
+GE to RU/EN translator helps Russian- and English-speaking users read Georgian websites when a site has no built-in page translation — or when that translation is incomplete or incorrect. It is tuned for the sites people use most often in Georgia, including everyday government services.
 
 What you can do
 • Translate the current page, including text that appears later in popups and forms
@@ -36,7 +36,7 @@ How to use
 Privacy
 Translation uses a packed glossary on your device when possible. Otherwise, page or PDF text snippets may be sent to Google’s translate service to obtain a result. Settings and a local translation cache stay on your device. The extension does not sell your data and does not load remote translation scripts into pages.
 
-Need help? Use the support contact on this listing or the project homepage when available.
+Need help? Email Aikhienvald@icloud.com or open an issue on the project homepage.
 
 **Category** [REQUIRED]
 
