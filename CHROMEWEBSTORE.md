@@ -63,8 +63,8 @@ Russian
 | Screenshot 3 [RECOMMENDED] | 1280×800 or 640×400 | ⬜ Not created | |
 | Screenshot 4 | 1280×800 or 640×400 | ⬜ Not created | |
 | Screenshot 5 | 1280×800 or 640×400 | ⬜ Not created | |
-| Small Promo Tile [RECOMMENDED] | 440×280 | ⬜ Not created | |
-| Marquee Promo Tile | 1400×560 | ⬜ Not created | |
+| Small Promo Tile [RECOMMENDED] | 440×280 | ✅ Ready | `store-assets/promo-small-440x280.jpg` (also `.png`, no alpha) |
+| Marquee Promo Tile | 1400×560 | ✅ Ready | `store-assets/promo-marquee-1400x560.jpg` (also `.png`, no alpha) |
 
 ### Screenshot Notes
 
@@ -151,7 +151,7 @@ Aikhienvald@icloud.com
 
 **Support URL / Email** [RECOMMENDED]
 
-https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues  
+https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/support.html  
 Also: Aikhienvald@icloud.com
 
 **Homepage URL** [RECOMMENDED]
