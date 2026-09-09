@@ -1,0 +1,16 @@
+---
+description: Keep CHROMEWEBSTORE.md in sync when changing this Chrome extension
+alwaysApply: true
+---
+
+# Chrome Web Store metadata
+
+Whenever you create or change this Chrome extension (especially `manifest.json` permissions, host_permissions, content_scripts, privacy behavior, or user-facing features):
+
+1. Create or update `CHROMEWEBSTORE.md` in the project root.
+2. Keep **Permissions Justification** complete — every `permissions` and `host_permissions` entry needs a plain-English, feature-specific reason (not “required for functionality”).
+3. Keep **Privacy & Data Use** aligned with real code (website content may leave the device via `translate.googleapis.com`).
+4. Add a **Version History** row when bumping `manifest.json` version.
+5. For format details, read `.agents/skills/chrome-extensions/SKILL.md` and `references/webstore/*`.
+
+Do not put secrets in `CHROMEWEBSTORE.md`. Do not include `CHROMEWEBSTORE.md`, `.agents/`, `.cursor/`, or `glossary-data/` in the Chrome Web Store ZIP.

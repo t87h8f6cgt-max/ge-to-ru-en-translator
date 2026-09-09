@@ -1,0 +1,30 @@
+#karu-status {
+  position: fixed;
+  z-index: 2147483646;
+  right: 16px;
+  bottom: 16px;
+  max-width: min(280px, calc(100vw - 32px));
+  padding: 10px 14px;
+  border-radius: 10px;
+  font: 13px/1.35 system-ui, -apple-system, Segoe UI, sans-serif;
+  color: #f4f7fb;
+  background: #1f3a5f;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+  pointer-events: none;
+}
+
+#karu-status[data-state="ok"] {
+  background: #1f5b3d;
+}
+
+#karu-status[data-state="err"] {
+  background: #7a2e2e;
+}
+
+#karu-status[data-state="idle"] {
+  background: #3a4556;
+}
+
+#karu-status[hidden] {
+  display: none !important;
+}

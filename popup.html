@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GE to RU/EN translator</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="brand">GE to RU/EN translator</div>
+        <p class="sub">Любая страница → EN / RU</p>
+      </header>
+
+      <label class="power" for="power">
+        <span class="power-text">
+          <strong id="power-label">Выключено</strong>
+        </span>
+        <input id="power" type="checkbox" role="switch" />
+        <span class="track" aria-hidden="true"><span class="knob"></span></span>
+      </label>
+
+      <fieldset class="lang" id="lang">
+        <legend>Язык перевода</legend>
+        <label class="lang-option">
+          <input type="radio" name="targetLang" value="en" />
+          <span>English</span>
+        </label>
+        <label class="lang-option">
+          <input type="radio" name="targetLang" value="ru" checked />
+          <span>Русский</span>
+        </label>
+      </fieldset>
+
+      <section class="actions" id="actions">
+        <button id="translate" type="button">Перевести страницу</button>
+        <button id="translate-pdf" type="button" class="secondary">Перевести PDF</button>
+        <button id="restore" type="button" class="secondary">Вернуть оригинал</button>
+      </section>
+
+      <p id="status" class="status" role="status">Включите расширение ползунком</p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+# Dependencies / build
+node_modules/
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Harvest / glossary source dumps (large; not for Store package)
+glossary-data/
+
+# Local env / secrets
+.env
+.env.*
+*.pem
+
+# Packaging
+*.zip
+dist/
+release/
+
+# Agent skill caches (optional local installs)
+.modern-web-guidance/
+
+# macOS
+.DS_Store
+
+# Optional: keep Cursor agent skill out of the public repo (large vendor copy)
+# Comment out if you want it published.
+.agents/

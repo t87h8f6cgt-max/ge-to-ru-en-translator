@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PDF — GE to RU/EN translator</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">PDF перевод</div>
+      <p id="meta" class="meta">Откройте PDF и нажмите «Перевести»</p>
+    </header>
+
+    <div class="toolbar">
+      <button id="run" type="button">Перевести PDF</button>
+      <button id="copy" type="button" class="secondary" disabled>Копировать</button>
+    </div>
+
+    <p id="status" class="status" role="status"></p>
+    <article id="out" class="out" hidden></article>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "GE to RU/EN translator",
+  "version": "2.4.1",
+  "description": "Translate Georgian pages, iframes and PDFs to English or Russian.",
+  "permissions": ["activeTab", "scripting", "storage", "webNavigation", "sidePanel"],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "file:///*",
+    "https://translate.googleapis.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GE to RU/EN translator",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/pdf.worker.min.mjs", "lib/pdf.min.mjs"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

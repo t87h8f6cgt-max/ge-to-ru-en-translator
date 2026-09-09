@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GE to RU/EN translator — Privacy Policy</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1a2332;
+        --muted: #5a6578;
+        --line: #d8dee8;
+        --bg: #f7f9fc;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.55 system-ui, -apple-system, Segoe UI, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 4rem;
+      }
+      h1 {
+        font-size: 1.6rem;
+        margin: 0 0 0.35rem;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 1.75rem;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin: 1.75rem 0 0.5rem;
+      }
+      p,
+      ul {
+        margin: 0.5rem 0;
+      }
+      ul {
+        padding-left: 1.2rem;
+      }
+      a {
+        color: #1f4f8a;
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 2rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Privacy Policy — GE to RU/EN translator</h1>
+      <p class="meta">Last updated: 2026-09-09</p>
+
+      <p>
+        GE to RU/EN translator is a Chrome extension that translates Georgian (ka) page text,
+        dialogs, iframes, and PDFs into English or Russian. This policy describes what
+        data is processed and why.
+      </p>
+
+      <h2>Data we process</h2>
+      <ul>
+        <li>
+          <strong>Text for translation.</strong> Visible page/PDF strings (and selected
+          attributes such as titles) may be sent to Google’s public translate endpoint
+          (<code>translate.googleapis.com</code>) to obtain a translation.
+        </li>
+        <li>
+          <strong>Local settings.</strong> Power on/off, preferred language, per-site
+          enable flags, and a translation cache are stored in
+          <code>chrome.storage.local</code> on your device.
+        </li>
+        <li>
+          <strong>No accounts.</strong> The extension does not create user accounts and
+          does not collect names, emails, or payment data.
+        </li>
+      </ul>
+
+      <h2>What we do not do</h2>
+      <ul>
+        <li>We do not sell or rent personal data.</li>
+        <li>We do not run advertising or analytics SDKs.</li>
+        <li>
+          We do not remotely load or evaluate third-party JavaScript into pages for
+          translation (no Google Translate widget / remote <code>eval</code>).
+        </li>
+      </ul>
+
+      <h2>Third parties</h2>
+      <p>
+        Translation requests go to Google Translate’s HTTP API. Google’s own privacy
+        terms apply to that traffic. See
+        <a href="https://policies.google.com/privacy" rel="noopener noreferrer"
+          >Google Privacy Policy</a
+        >.
+      </p>
+
+      <h2>Permissions (why they exist)</h2>
+      <ul>
+        <li><strong>activeTab / scripting</strong> — read and replace text on the active page.</li>
+        <li><strong>storage</strong> — save settings and cache.</li>
+        <li><strong>webNavigation</strong> — detect late-loading iframes to translate.</li>
+        <li><strong>sidePanel</strong> — show PDF translation UI.</li>
+        <li>
+          <strong>Host access</strong> — pages you open (http/https/file) and
+          <code>translate.googleapis.com</code> for API calls.
+        </li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>
+        For privacy questions about this extension, open an issue in the project
+        repository or contact the publisher listed on the Chrome Web Store listing.
+      </p>
+
+      <hr />
+      <p class="meta">GE to RU/EN translator · offline glossary + on-demand API translation</p>
+    </main>
+  </body>
+</html>
