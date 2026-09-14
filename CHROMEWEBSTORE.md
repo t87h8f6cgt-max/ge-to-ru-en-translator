@@ -1,6 +1,6 @@
 # Chrome Web Store Listing — GE to RU/EN translator
 
-> Last Updated: 2026-09-09  
+> Last Updated: 2026-09-14  
 > Source of truth for Developer Dashboard fields. Do **not** include this file in the Store ZIP.
 
 ## Store Listing
@@ -23,27 +23,29 @@ GE to RU/EN translator helps Russian- and English-speaking users read Georgian w
 
 What you can do
 • Translate the current page, including text that appears later in popups and forms
+• Use the floating GE→ / ↩ button on the page without opening the popup
 • Translate content inside nested frames when the site embeds other services
 • Translate native browser confirm/alert messages when they contain Georgian text
 • Open a side panel to extract and translate PDF text (online PDFs and local files if you allow file access)
+• Toolbar badge shows RU/EN (stronger when the site is set to always translate)
 
 How to use
 1. Click the extension icon and turn the power switch on
-2. Choose English or Russian
-3. Press “Перевести страницу” for the open tab, or “Перевести PDF” for a PDF
-4. Optional: enable “Всегда переводить этот сайт” for auto-translate on return visits
-5. Right-click selected text → “Перевести выделение”; use highlight to find leftover Georgian
-6. Press “Вернуть оригинал” to restore the page text when you used on-page translation
+2. Choose English or Russian (badge on the icon shows the language)
+3. Press “Перевести” in the popup, or the floating GE→ button on the page
+4. Optional: enable “Переводить всегда” for auto-translate on return visits
+5. Right-click selected text → “Перевести выделенное”; use highlight to find leftover Georgian
+6. Press “Оригинал” or the floating ↩ button to restore page text
 
 FAQ
-• Local PDF from disk: chrome://extensions → this extension → enable “Allow access to file URLs”, then reopen the PDF and use “Перевести PDF”.
-• Nested iframes on gov sites may finish loading late — wait a second or translate again; turn on “Подсветить оставшийся грузинский” to see leftovers.
-• Report a bad translation from the popup button (opens a GitHub Issue draft with page URL and text).
+• Local PDF from disk: chrome://extensions → this extension → enable “Allow access to file URLs”, then reopen the PDF and use “PDF”.
+• Nested iframes on gov sites may finish loading late — wait a second or translate again; turn on highlight leftover Georgian to see leftovers.
+• Report a bad translation from the popup (opens a GitHub Issue draft with page URL and text).
 
 Privacy
 Translation uses a packed glossary on your device when possible. Otherwise, page or PDF text snippets may be sent to Google’s translate service to obtain a result. Settings and a local translation cache stay on your device. The extension does not sell your data and does not load remote translation scripts into pages.
 
-Need help? https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/support.html or email Aikhienvald@icloud.com
+Need help? https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/support.html or email aikhendev@gmail.com
 
 **Category** [REQUIRED]
 
@@ -76,9 +78,9 @@ Russian
 ### Screenshot Notes
 
 1. ✅ rs.ge cabinet after RU translation (modules grid + sidebar) — `store-assets/screenshot-1-1280x800.jpg` (padded to 1280×800).
-2. ⬜ Popup with «Всегда переводить этот сайт» + highlight toggle (recommended for Store update).
+2. ⬜ Popup with «Переводить всегда» + highlight toggle (recommended for Store update).
 3. ⬜ PDF side panel with translated text (recommended).
-4. Right-click «Перевести выделение» in action (optional).
+4. Right-click «Перевести выделенное» in action (optional).
 
 ### Icons
 
@@ -93,7 +95,7 @@ Toolbar / store icons redrawn: minimalist Georgian five-cross flag with centered
 | `storage` | permissions | Saves power on/off, preferred language (EN/RU), per-site enable flags, PDF side-panel handoff, and a local translation cache so repeated phrases translate faster offline. |
 | `webNavigation` | permissions | Detects when late-loading frames finish loading so nested Georgian content (common on Georgian e-gov portals) can be translated after the user enabled the site. Also used to enumerate frames when broadcasting translate/restore from the popup. |
 | `sidePanel` | permissions | Opens the PDF translation side panel from the popup (“Перевести PDF”) without navigating away from the PDF tab. |
-| `contextMenus` | permissions | Adds a right-click item “Перевести выделение (GE→RU/EN)” so users can translate only the selected Georgian text. |
+| `contextMenus` | permissions | Adds a right-click item “Перевести выделенное (GE→RU/EN)” so users can translate only the selected Georgian text. |
 | `http://*/*` | host_permissions | Reads and updates visible text on any HTTP page the user chooses to translate (Georgian sites are not limited to a fixed domain list). |
 | `https://*/*` | host_permissions | Same as HTTP for HTTPS pages, including cross-origin iframes that content scripts must run in. |
 | `file:///*` | host_permissions | Allows translating PDFs and pages opened from disk when the user enables “Allow access to file URLs” for this extension. |
@@ -156,12 +158,12 @@ Aleksandr Anisimov
 
 **Contact Email** [REQUIRED]
 
-Aikhienvald@icloud.com
+aikhendev@gmail.com
 
 **Support URL / Email** [RECOMMENDED]
 
 https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/support.html  
-Also: Aikhienvald@icloud.com
+Also: aikhendev@gmail.com
 
 **Homepage URL** [RECOMMENDED]
 
@@ -172,6 +174,7 @@ https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
+| 2.6.0 | 2026-09-14 | Compact popup + status chip; red theme + dark mode; action badge RU/EN; floating page FAB; stronger input/focus skip; RU counter plurals; What’s new + support link | Draft |
 | 2.5.0 | 2026-09-14 | FAQ; report bad translation; protect IDs/dates/IBAN; highlight leftover Georgian; context-menu selection translate; clearer always-translate-this-site toggle | Draft |
 | 2.4.1 | 2026-09-09 | Renamed to “GE to RU/EN translator”; store icon + screenshot assets | Draft |
 | 2.4.0 | 2026-09-09 | API-only EN/RU (no remote GT widget/eval); dialog hook token hardening; iframe translate throttle; privacy.html + packaging hygiene | Draft |
