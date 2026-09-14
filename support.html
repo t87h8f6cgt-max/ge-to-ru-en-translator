@@ -3,58 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Support — GE to RU/EN translator</title>
+    <title>Как пользоваться — GE to RU/EN translator</title>
     <style>
       :root {
         color-scheme: light;
-        --ink: #1a2332;
-        --muted: #5a6578;
-        --line: #d8dee8;
-        --bg: #f7f9fc;
-        --accent: #1f4f8a;
+        --ink: #1a1210;
+        --muted: #6b5a56;
+        --line: #e8d9d4;
+        --bg: #f7f1ef;
+        --panel: #ffffff;
+        --accent: #e01e37;
+        --accent-ink: #1f4f8a;
       }
       body {
         margin: 0;
         font: 16px/1.55 system-ui, -apple-system, Segoe UI, sans-serif;
         color: var(--ink);
-        background: var(--bg);
+        background:
+          radial-gradient(120% 70% at 0% 0%, rgba(224, 30, 55, 0.08) 0%, transparent 50%),
+          var(--bg);
       }
       main {
         max-width: 40rem;
         margin: 0 auto;
-        padding: 2.5rem 1.25rem 4rem;
+        padding: 2.25rem 1.25rem 4rem;
       }
       h1 {
-        font-size: 1.6rem;
+        font-size: 1.55rem;
         margin: 0 0 0.35rem;
+        letter-spacing: -0.02em;
       }
       .meta {
         color: var(--muted);
-        font-size: 0.9rem;
-        margin-bottom: 1.75rem;
+        font-size: 0.92rem;
+        margin: 0 0 1.5rem;
+      }
+      .lead {
+        margin: 0 0 1.25rem;
+        font-size: 1.02rem;
       }
       h2 {
-        font-size: 1.1rem;
-        margin: 1.75rem 0 0.5rem;
-      }
-      p,
-      ul {
-        margin: 0.5rem 0;
-      }
-      ul {
-        padding-left: 1.2rem;
-      }
-      a {
-        color: var(--accent);
-      }
-      hr {
-        border: 0;
-        border-top: 1px solid var(--line);
-        margin: 2rem 0;
+        font-size: 1.15rem;
+        margin: 2rem 0 0.55rem;
       }
       h3 {
         font-size: 1rem;
-        margin: 1.25rem 0 0.4rem;
+        margin: 1.15rem 0 0.35rem;
+      }
+      p,
+      ol,
+      ul {
+        margin: 0.55rem 0;
+      }
+      ol,
+      ul {
+        padding-left: 1.25rem;
+      }
+      li + li {
+        margin-top: 0.35rem;
+      }
+      a {
+        color: var(--accent-ink);
+      }
+      code {
+        font-size: 0.9em;
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .card {
+        margin: 1rem 0;
+        padding: 1rem 1.1rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .card p:first-child {
+        margin-top: 0;
+      }
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+      .toc {
+        margin: 1rem 0 0;
+        padding: 0.9rem 1.1rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .toc ul {
+        margin: 0.35rem 0 0;
+        padding-left: 1.1rem;
+      }
+      .tip {
+        margin: 0.75rem 0;
+        padding: 0.75rem 0.9rem;
+        border-left: 3px solid var(--accent);
+        background: rgba(224, 30, 55, 0.06);
+        border-radius: 0 8px 8px 0;
       }
       .crypto-box {
         display: flex;
@@ -63,7 +109,7 @@
         gap: 0.6rem;
         margin: 0.75rem 0;
         padding: 0.85rem 1rem;
-        background: #fff;
+        background: var(--panel);
         border: 1px solid var(--line);
         border-radius: 10px;
       }
@@ -71,6 +117,8 @@
         flex: 1 1 12rem;
         font-size: 0.85rem;
         word-break: break-all;
+        background: transparent;
+        padding: 0;
       }
       .crypto-copy {
         appearance: none;
@@ -82,127 +130,186 @@
         font-weight: 600;
         cursor: pointer;
         color: #fff;
-        background: #1f4f8a;
+        background: var(--accent);
       }
       .crypto-copy:hover {
-        filter: brightness(1.08);
+        filter: brightness(1.06);
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 2.25rem 0;
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>Support — GE to RU/EN translator</h1>
-      <p class="meta">Chrome extension · Georgian → Russian / English</p>
+      <h1>Как пользоваться</h1>
+      <p class="meta">GE to RU/EN translator · перевод с грузинского на русский или английский</p>
 
+      <p class="lead">
+        Расширение помогает читать грузинские сайты, когда на странице нет нормального перевода —
+        или он кривой. Особенно удобно на госуслугах, в личных кабинетах и в PDF.
+      </p>
+
+      <nav class="toc" aria-label="Содержание">
+        <strong>На этой странице</strong>
+        <ul>
+          <li><a href="#start">С чего начать</a></li>
+          <li><a href="#page">Перевод страницы</a></li>
+          <li><a href="#always">Всегда переводить сайт</a></li>
+          <li><a href="#fab">Кнопка на странице</a></li>
+          <li><a href="#selection">Только выделенный текст</a></li>
+          <li><a href="#pdf">PDF</a></li>
+          <li><a href="#leftover">Если что-то осталось на грузинском</a></li>
+          <li><a href="#report">Сообщить о плохом переводе</a></li>
+          <li><a href="#whats-new">Что нового</a></li>
+          <li><a href="#support-project">Поддержать проект</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="start">С чего начать</h2>
+      <ol>
+        <li>Нажмите на иконку расширения в панели Chrome.</li>
+        <li>Включите главный переключатель (станет «Включено»).</li>
+        <li>Выберите язык: <strong>RU</strong> или <strong>EN</strong>.</li>
+        <li>Нажмите <strong>«Перевести»</strong>.</li>
+      </ol>
+      <p class="tip">
+        На иконке расширения появляется бейдж <strong>RU</strong> или <strong>EN</strong> —
+        так видно, какой язык выбран сейчас.
+      </p>
+
+      <h2 id="page">Перевод страницы</h2>
+      <div class="card">
+        <p>
+          Расширение проходит по тексту на открытой вкладке и переводит грузинский на выбранный язык.
+          Работают и всплывающие окна, и многие вложенные блоки на госсайтах.
+        </p>
+        <p>
+          Чтобы вернуть исходный текст — нажмите <strong>«Оригинал»</strong> в popup
+          или кнопку <strong>↩</strong> на самой странице.
+        </p>
+      </div>
+
+      <h2 id="always">«Переводить всегда»</h2>
       <p>
-        Need help with installation, translation quality, PDF mode, or permissions?
-        Contact the publisher — we will try to help.
+        Если часто заходите на один и тот же сайт (например, кабинет налогов), включите
+        <strong>«Переводить всегда»</strong>. При следующем визите на этот адрес перевод
+        запустится сам, без лишних кликов.
+      </p>
+      <p>
+        Под галкой видно имя сайта (домен). Выключить можно в любой момент тем же переключателем.
       </p>
 
-      <h2>FAQ</h2>
-      <p><strong>Как установить / включить?</strong><br />
-        Откройте расширение → включите ползунок → выберите RU или EN → «Перевести страницу».
-        Можно включить «Переводить всегда», чтобы при следующем заходе перевод шёл сам.
+      <h2 id="fab">Кнопка прямо на странице</h2>
+      <p>
+        В левом нижнем углу страницы появляется плавающая кнопка:
       </p>
-      <p><strong>Локальный PDF с диска не переводится</strong><br />
-        Откройте <code>chrome://extensions</code> → GE to RU/EN translator → включите
-        «Allow access to file URLs» / «Разрешить доступ к файловым URL», затем снова откройте PDF
-        и нажмите «Перевести PDF».
+      <ul>
+        <li><strong>GE→</strong> — перевести;</li>
+        <li><strong>↩</strong> — вернуть оригинал.</li>
+      </ul>
+      <p>Удобно, когда не хочется каждый раз открывать popup.</p>
+
+      <h2 id="selection">Только выделенный текст</h2>
+      <ol>
+        <li>Выделите кусок текста на странице.</li>
+        <li>Правый клик → <strong>«Перевести выделенное (GE→RU/EN)»</strong>.</li>
+      </ol>
+      <p>Расширение должно быть включено. Переводится именно выделение, а не вся страница.</p>
+
+      <h2 id="pdf">PDF</h2>
+      <p>
+        Откройте PDF во вкладке Chrome и в popup нажмите <strong>«PDF»</strong>.
+        Откроется боковая панель: текст извлечётся и переведётся.
       </p>
-      <p><strong>Часть страницы осталась на грузинском (iframe)</strong><br />
-        На госсайтах часто бывают вложенные окна с другого домена. После перевода подождите 1–2 секунды
-        или нажмите «Перевести страницу» ещё раз. Включите «Подсветить оставшийся грузинский», чтобы увидеть,
-        что не перевелось.
+      <p>
+        <strong>Файл с диска (file://)</strong> Chrome по умолчанию блокирует.
+        Один раз разрешите доступ:
       </p>
-      <p><strong>Как перевести только выделенный текст?</strong><br />
-        Выделите текст → правый клик → «Перевести выделенное (GE→RU/EN)».
-      </p>
-      <p><strong>Как сообщить о плохом переводе?</strong><br />
-        В popup нажмите «Сообщить о плохом переводе» — откроется черновик
-        <a href="https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues/new"
-          >GitHub Issue</a
-        >
-        с URL и фрагментом текста (нужен аккаунт GitHub).
+      <ol>
+        <li>Откройте <code>chrome://extensions</code></li>
+        <li>Найдите <strong>GE to RU/EN translator</strong></li>
+        <li>Включите <strong>«Разрешить доступ к файловым URL»</strong> / Allow access to file URLs</li>
+        <li>Снова откройте PDF и нажмите «PDF»</li>
+      </ol>
+
+      <h2 id="leftover">Если что-то осталось на грузинском</h2>
+      <p>Так бывает на сложных сайтах: куски текста подгружаются позже или лежат во вложенных окнах (iframe).</p>
+      <ul>
+        <li>Подождите 1–2 секунды и нажмите «Перевести» ещё раз.</li>
+        <li>
+          В блоке <strong>«Дополнительно»</strong> включите
+          <strong>«Подсветить оставшийся ka»</strong> — непереведённые места подсветятся.
+        </li>
+        <li>Поля ввода и текст, который вы сейчас печатаете, специально не трогаем.</li>
+      </ul>
+
+      <h2 id="report">Сообщить о плохом переводе</h2>
+      <p>
+        В <strong>«Дополнительно»</strong> есть кнопка
+        <strong>«Сообщить о плохом переводе»</strong>.
+        Откроется черновик обращения на GitHub с адресом страницы и примерами текста
+        (нужен аккаунт GitHub). Текст также копируется в буфер — можно переслать как удобно.
       </p>
 
       <h2 id="whats-new">Что нового</h2>
-      <p><strong>2.6.0</strong></p>
+      <h3>2.6.0</h3>
       <ul>
-        <li>Компактный popup, статус-чип сайта, красный акцент и тёмная тема</li>
-        <li>Бейдж RU/EN на иконке расширения (ярче, если сайт в автопереводе)</li>
-        <li>Плавающая кнопка на странице: перевести / вернуть оригинал</li>
-        <li>Сильнее защита полей ввода и активного фокуса от перевода</li>
-        <li>Склонения счётчиков: «5 запросов», «62866 уведомлений»</li>
+        <li>Компактное окно, статус сайта, тёмная тема</li>
+        <li>Бейдж языка на иконке</li>
+        <li>Плавающая кнопка перевода на странице</li>
+        <li>Аккуратнее с полями ввода</li>
+        <li>Правильные склонения вроде «5 запросов»</li>
       </ul>
-      <p><strong>2.5.0</strong></p>
+      <h3>2.5.0</h3>
       <ul>
-        <li>Сообщить о плохом переводе (черновик GitHub Issue)</li>
-        <li>Защита IBAN / ID / дат; подсветка оставшегося грузинского</li>
-        <li>ПКМ «Перевести выделенное»; «Переводить всегда»</li>
+        <li>Репорт плохого перевода</li>
+        <li>Защита номеров, IBAN и дат</li>
+        <li>Подсветка оставшегося грузинского</li>
+        <li>Перевод выделения и «Переводить всегда»</li>
       </ul>
 
       <h2 id="support-project">Поддержать проект</h2>
       <p>
-        Расширение бесплатное. Если оно экономит время — можно сказать спасибо
-        криптой, письмом или отзывом в Chrome Web Store.
+        Расширение бесплатное. Если оно экономит время — можно сказать спасибо криптой
+        или отзывом в Chrome Web Store. Поддержать можно и прямо из окна расширения
+        (кнопка «Поддержать проект»).
       </p>
-
-      <h3>Крипта (USDT)</h3>
+      <h3>USDT</h3>
       <p>
-        Сеть только <strong>TRC20 (Tron)</strong>. Другая сеть — средства могут
-        пропасть.
+        Сеть только <strong>TRC20 (Tron)</strong>. Другая сеть — средства могут пропасть.
       </p>
       <p class="crypto-box">
         <code id="crypto-addr">TYFV91PyEvUNmoUSb5QHoNtsGVVhy5GS7h</code>
         <button type="button" id="crypto-copy" class="crypto-copy">Скопировать</button>
       </p>
-      <p class="meta">
-        Адрес Bybit (USDT · TRC20). Любая сумма — уже поддержка.
-      </p>
+      <p class="meta">Адрес Bybit · USDT · TRC20. Любая сумма — уже помощь.</p>
 
+      <h2>Связь и конфиденциальность</h2>
       <ul>
         <li>
-          Написать:
-          <a href="mailto:Aikhienvald@icloud.com?subject=Support%20GE%20to%20RU%2FEN%20translator"
-            >Aikhienvald@icloud.com</a
-          >
-        </li>
-        <li>
-          Оставить отзыв в
-          <a href="https://chromewebstore.google.com/"
-            >Chrome Web Store</a
-          >
-          (найдите «GE to RU/EN translator»)
-        </li>
-      </ul>
-
-      <h2>Contact</h2>
-      <ul>
-        <li>
-          Email:
+          Почта:
           <a href="mailto:Aikhienvald@icloud.com">Aikhienvald@icloud.com</a>
         </li>
         <li>
-          GitHub Issues:
+          Ошибки и идеи:
           <a href="https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues"
-            >github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues</a
+            >GitHub Issues</a
           >
         </li>
+        <li>
+          <a href="privacy.html">Политика конфиденциальности</a>
+        </li>
       </ul>
-
-      <h2>Publisher</h2>
-      <p>Aleksandr Anisimov</p>
-
-      <h2>Privacy</h2>
-      <p>
-        <a href="privacy.html">Privacy Policy</a>
-      </p>
+      <p>Издатель: Aleksandr Anisimov</p>
 
       <hr />
       <p class="meta">
-        Homepage:
+        Репозиторий:
         <a href="https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator"
-          >GitHub repository</a
+          >github.com/t87h8f6cgt-max/ge-to-ru-en-translator</a
         >
       </p>
     </main>
