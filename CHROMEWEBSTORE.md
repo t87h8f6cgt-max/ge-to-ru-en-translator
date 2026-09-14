@@ -38,7 +38,7 @@ How to use
 FAQ
 • Local PDF from disk: chrome://extensions → this extension → enable “Allow access to file URLs”, then reopen the PDF and use “Перевести PDF”.
 • Nested iframes on gov sites may finish loading late — wait a second or translate again; turn on “Подсветить оставшийся грузинский” to see leftovers.
-• Report a bad translation from the popup button (opens an email draft with page URL and text).
+• Report a bad translation from the popup button (opens a GitHub Issue draft with page URL and text).
 
 Privacy
 Translation uses a packed glossary on your device when possible. Otherwise, page or PDF text snippets may be sent to Google’s translate service to obtain a result. Settings and a local translation cache stay on your device. The extension does not sell your data and does not load remote translation scripts into pages.

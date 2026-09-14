@@ -409,14 +409,14 @@ reportBtn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(body);
     } catch (_) {}
-    const mailto =
-      "mailto:Aikhienvald@icloud.com" +
-      "?subject=" +
-      encodeURIComponent("Bad translation — GE to RU/EN translator") +
+    const issueUrl =
+      "https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues/new" +
+      "?title=" +
+      encodeURIComponent("Bad translation") +
       "&body=" +
-      encodeURIComponent(body.slice(0, 1800));
-    window.open(mailto, "_blank");
-    setStatus("Черновик письма открыт (текст также в буфере)", "ok");
+      encodeURIComponent(body.slice(0, 5500));
+    await chrome.tabs.create({ url: issueUrl });
+    setStatus("Открыт черновик GitHub Issue (текст также в буфере)", "ok");
   } catch (err) {
     setStatus(String(err?.message || err), "err");
   }
