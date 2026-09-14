@@ -52,6 +52,41 @@
         border-top: 1px solid var(--line);
         margin: 2rem 0;
       }
+      h3 {
+        font-size: 1rem;
+        margin: 1.25rem 0 0.4rem;
+      }
+      .crypto-box {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0.75rem 0;
+        padding: 0.85rem 1rem;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+      .crypto-box code {
+        flex: 1 1 12rem;
+        font-size: 0.85rem;
+        word-break: break-all;
+      }
+      .crypto-copy {
+        appearance: none;
+        border: 0;
+        border-radius: 8px;
+        padding: 0.45rem 0.75rem;
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        color: #fff;
+        background: #1f4f8a;
+      }
+      .crypto-copy:hover {
+        filter: brightness(1.08);
+      }
     </style>
   </head>
   <body>
@@ -67,7 +102,7 @@
       <h2>FAQ</h2>
       <p><strong>Как установить / включить?</strong><br />
         Откройте расширение → включите ползунок → выберите RU или EN → «Перевести страницу».
-        Можно включить «Всегда переводить этот сайт», чтобы при следующем заходе перевод шёл сам.
+        Можно включить «Переводить всегда», чтобы при следующем заходе перевод шёл сам.
       </p>
       <p><strong>Локальный PDF с диска не переводится</strong><br />
         Откройте <code>chrome://extensions</code> → GE to RU/EN translator → включите
@@ -80,7 +115,7 @@
         что не перевелось.
       </p>
       <p><strong>Как перевести только выделенный текст?</strong><br />
-        Выделите текст → правый клик → «Перевести выделение (GE→RU/EN)».
+        Выделите текст → правый клик → «Перевести выделенное (GE→RU/EN)».
       </p>
       <p><strong>Как сообщить о плохом переводе?</strong><br />
         В popup нажмите «Сообщить о плохом переводе» — откроется черновик
@@ -89,6 +124,57 @@
         >
         с URL и фрагментом текста (нужен аккаунт GitHub).
       </p>
+
+      <h2 id="whats-new">Что нового</h2>
+      <p><strong>2.6.0</strong></p>
+      <ul>
+        <li>Компактный popup, статус-чип сайта, красный акцент и тёмная тема</li>
+        <li>Бейдж RU/EN на иконке расширения (ярче, если сайт в автопереводе)</li>
+        <li>Плавающая кнопка на странице: перевести / вернуть оригинал</li>
+        <li>Сильнее защита полей ввода и активного фокуса от перевода</li>
+        <li>Склонения счётчиков: «5 запросов», «62866 уведомлений»</li>
+      </ul>
+      <p><strong>2.5.0</strong></p>
+      <ul>
+        <li>Сообщить о плохом переводе (черновик GitHub Issue)</li>
+        <li>Защита IBAN / ID / дат; подсветка оставшегося грузинского</li>
+        <li>ПКМ «Перевести выделенное»; «Переводить всегда»</li>
+      </ul>
+
+      <h2 id="support-project">Поддержать проект</h2>
+      <p>
+        Расширение бесплатное. Если оно экономит время — можно сказать спасибо
+        криптой, письмом или отзывом в Chrome Web Store.
+      </p>
+
+      <h3>Крипта (USDT)</h3>
+      <p>
+        Сеть только <strong>TRC20 (Tron)</strong>. Другая сеть — средства могут
+        пропасть.
+      </p>
+      <p class="crypto-box">
+        <code id="crypto-addr">TYFV91PyEvUNmoUSb5QHoNtsGVVhy5GS7h</code>
+        <button type="button" id="crypto-copy" class="crypto-copy">Скопировать</button>
+      </p>
+      <p class="meta">
+        Адрес Bybit (USDT · TRC20). Любая сумма — уже поддержка.
+      </p>
+
+      <ul>
+        <li>
+          Написать:
+          <a href="mailto:Aikhienvald@icloud.com?subject=Support%20GE%20to%20RU%2FEN%20translator"
+            >Aikhienvald@icloud.com</a
+          >
+        </li>
+        <li>
+          Оставить отзыв в
+          <a href="https://chromewebstore.google.com/"
+            >Chrome Web Store</a
+          >
+          (найдите «GE to RU/EN translator»)
+        </li>
+      </ul>
 
       <h2>Contact</h2>
       <ul>
@@ -120,5 +206,24 @@
         >
       </p>
     </main>
+    <script>
+      (function () {
+        const btn = document.getElementById("crypto-copy");
+        const addr = document.getElementById("crypto-addr");
+        if (!btn || !addr) return;
+        btn.addEventListener("click", async () => {
+          const text = addr.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(text);
+            btn.textContent = "Скопировано";
+            setTimeout(() => {
+              btn.textContent = "Скопировать";
+            }, 1600);
+          } catch (_) {
+            btn.textContent = "Выделите адрес";
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
