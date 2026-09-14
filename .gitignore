@@ -27,3 +27,6 @@ release/
 # Optional: keep Cursor agent skill out of the public repo (large vendor copy)
 # Comment out if you want it published.
 .agents/
+
+# Local copy for sharing with friends
+share/

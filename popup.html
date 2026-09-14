@@ -33,13 +33,39 @@
         </label>
       </fieldset>
 
+      <label class="site-opt" id="site-wrap" for="always-site">
+        <span class="site-text">
+          <strong>Всегда переводить этот сайт</strong>
+          <small id="site-host">—</small>
+        </span>
+        <input id="always-site" type="checkbox" />
+      </label>
+
+      <label class="site-opt" for="highlight-ge">
+        <span class="site-text">
+          <strong>Подсветить оставшийся грузинский</strong>
+          <small>чтобы увидеть, что не перевелось</small>
+        </span>
+        <input id="highlight-ge" type="checkbox" />
+      </label>
+
       <section class="actions" id="actions">
         <button id="translate" type="button">Перевести страницу</button>
         <button id="translate-pdf" type="button" class="secondary">Перевести PDF</button>
         <button id="restore" type="button" class="secondary">Вернуть оригинал</button>
+        <button id="report" type="button" class="secondary">Сообщить о плохом переводе</button>
       </section>
 
       <p id="status" class="status" role="status">Включите расширение ползунком</p>
+      <p class="hint">
+        Выделение: правый клик → «Перевести выделение». FAQ:
+        <a
+          href="https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/support.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >support</a
+        >
+      </p>
     </main>
     <script src="popup.js"></script>
   </body>

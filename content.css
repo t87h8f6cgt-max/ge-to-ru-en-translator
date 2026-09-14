@@ -28,3 +28,10 @@
 #karu-status[hidden] {
   display: none !important;
 }
+
+.karu-ge-remain {
+  outline: 2px solid #e6a23c !important;
+  outline-offset: 1px;
+  background-color: rgba(230, 162, 60, 0.18) !important;
+  border-radius: 2px;
+}

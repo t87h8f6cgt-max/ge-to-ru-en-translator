@@ -7,7 +7,7 @@ importScripts("glossary-generated.js", "glossary.js");
 const GEORGIAN_RE = /[\u10A0-\u10FF\u1C90-\u1CBF]/;
 const MAX_PACK_CHARS = 6000;
 const MAX_PACK_ITEMS = 40;
-const CACHE_KEY = "kaRuCache_v11";
+const CACHE_KEY = "kaRuCache_v12";
 const MAX_CACHE = 8000;
 
 /** @type {Map<string, string>} */
@@ -217,6 +217,31 @@ function looksAlreadyTarget(text, target) {
   return false;
 }
 
+/** Protect IBANs, IDs, dates, phones, emails, URLs, long digit codes from API mangling */
+const PROTECT_RE =
+  /\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b|\b\d{4}[./\-]\d{1,2}[./\-]\d{1,2}\b|\b\d{1,2}[./\-]\d{1,2}[./\-]\d{2,4}\b|\b(?:\+?\d[\d\s\-()]{6,}\d)\b|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b|https?:\/\/[^\s<>"']+|\b[A-Z]{1,6}[-/]?\d{3,}\b|\b\d{6,}\b|\b\d+[.,]\d{2,}\b|№\s*\d+/gi;
+
+function protectSensitive(text) {
+  const tokens = [];
+  const protectedText = String(text).replace(PROTECT_RE, (m) => {
+    const i = tokens.length;
+    tokens.push(m);
+    return `\uE000${i}\uE001`;
+  });
+  return { protectedText, tokens };
+}
+
+function restoreSensitive(text, tokens) {
+  return String(text).replace(/\uE000(\d+)\uE001/g, (_, n) => tokens[Number(n)] ?? "");
+}
+
+function isCodeHeavyNoGeorgianWords(text) {
+  const stripped = String(text)
+    .replace(PROTECT_RE, " ")
+    .replace(/[\s\d.,\-_/\\#:№()[+%\]]+/g, "");
+  return !GEORGIAN_RE.test(stripped);
+}
+
 async function translateBatch(texts, target, opts = {}) {
   await ensureCache();
   const sourceLang = opts.sourceLang === "auto" ? "auto" : "ka";
@@ -230,7 +255,7 @@ async function translateBatch(texts, target, opts = {}) {
       return;
     }
     if (sourceLang === "ka") {
-      if (!GEORGIAN_RE.test(trimmed)) {
+      if (!GEORGIAN_RE.test(trimmed) || isCodeHeavyNoGeorgianWords(trimmed)) {
         result[index] = applyPostFixes(text, target);
         return;
       }
@@ -267,14 +292,20 @@ async function translateBatch(texts, target, opts = {}) {
     }
   }
 
+  const protectedPack = unique.map((t) => protectSensitive(t));
   const sl = sourceLang === "auto" ? "auto" : "ka";
-  const stage = await translateAll(unique, sl, target);
+  const stage = await translateAll(
+    protectedPack.map((p) => p.protectedText),
+    sl,
+    target
+  );
   stage.forEach((t, i) => {
-    if (t && !stillGeorgian(t)) cacheSet(unique[i], target, t);
+    const restored = restoreSensitive(t || protectedPack[i].protectedText, protectedPack[i].tokens);
+    if (restored && !stillGeorgian(restored)) cacheSet(unique[i], target, restored);
   });
 
   const translatedUnique = stage.map((t, i) => {
-    let out = t || unique[i];
+    let out = restoreSensitive(t || protectedPack[i].protectedText, protectedPack[i].tokens);
     if (stillGeorgian(out)) out = applyGlossary(out, target);
     return applyPostFixes(out, target);
   });
@@ -462,6 +493,51 @@ try {
     .setPanelBehavior({ openPanelOnActionClick: false })
     .catch(() => {});
 } catch (_) {}
+
+function ensureContextMenus() {
+  try {
+    chrome.contextMenus.removeAll(() => {
+      chrome.contextMenus.create({
+        id: "translate-selection",
+        title: "Перевести выделение (GE→RU/EN)",
+        contexts: ["selection"],
+      });
+    });
+  } catch (_) {}
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+  ensureContextMenus();
+});
+ensureContextMenus();
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId !== "translate-selection" || !tab?.id) return;
+  (async () => {
+    const text = (info.selectionText || "").trim();
+    if (!text || !GEORGIAN_RE.test(text)) return;
+    const data = await chrome.storage.local.get(["powerOn", "targetLang"]);
+    if (data.powerOn !== true) return;
+    const targetLang = data.targetLang === "en" ? "en" : "ru";
+    const translated = await translateBatch([text], targetLang);
+    const next = translated[0] || text;
+    const frameIds =
+      typeof info.frameId === "number" ? [info.frameId] : undefined;
+    await chrome.scripting.executeScript({
+      target: frameIds ? { tabId: tab.id, frameIds } : { tabId: tab.id },
+      func: (replacement) => {
+        const sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return false;
+        const range = sel.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(document.createTextNode(replacement));
+        sel.removeAllRanges();
+        return true;
+      },
+      args: [next],
+    });
+  })().catch(() => {});
+});
 
 /** Late-loading iframes — throttled to avoid request storms */
 chrome.webNavigation.onCompleted.addListener(async (details) => {

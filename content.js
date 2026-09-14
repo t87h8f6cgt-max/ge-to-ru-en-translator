@@ -45,6 +45,7 @@
   let mode = "none"; // api | none
   let observer = null;
   let reapplyTimer = null;
+  let highlightGeorgian = false;
   const DIALOG_TOKEN =
     (crypto.randomUUID && crypto.randomUUID()) ||
     `karu-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -197,6 +198,7 @@
       const total = nodes.length + attrs.length;
       if (!total) {
         if (!quiet) setStatus("Грузинский текст не найден", "idle");
+        refreshGeorgianHighlight();
         return { translated: 0, total: 0 };
       }
 
@@ -243,6 +245,7 @@
       } else if (done) {
         setStatus(`Доперевод окна: ${done}`, left ? "err" : "ok");
       }
+      refreshGeorgianHighlight();
       return { translated: done, total, left };
     } finally {
       apiPassBusy = false;
@@ -257,6 +260,56 @@
 
   function remainingGeorgian() {
     return collectTextNodes().length + collectAttrs().length;
+  }
+
+  function clearGeorgianHighlight() {
+    document.querySelectorAll(".karu-ge-remain").forEach((el) => {
+      el.classList.remove("karu-ge-remain");
+    });
+  }
+
+  function refreshGeorgianHighlight() {
+    clearGeorgianHighlight();
+    if (!highlightGeorgian || !document.body) return;
+    const marked = new Set();
+    for (const node of collectTextNodes()) {
+      const el = node.parentElement;
+      if (!el || marked.has(el)) continue;
+      marked.add(el);
+      el.classList.add("karu-ge-remain");
+    }
+  }
+
+  function buildBadTranslationReport() {
+    const sel = (window.getSelection?.()?.toString() || "").trim();
+    const samples = [];
+    if (sel) samples.push(sel);
+    for (const node of collectTextNodes()) {
+      const t = (node.nodeValue || "").trim();
+      if (t && !samples.includes(t)) samples.push(t);
+      if (samples.length >= 8) break;
+    }
+    for (const item of collectAttrs()) {
+      if (item.value && !samples.includes(item.value)) samples.push(item.value);
+      if (samples.length >= 8) break;
+    }
+    const translatedBits = [];
+    for (const [node, original] of originals) {
+      if (!node.isConnected) continue;
+      if (node.nodeValue && original && node.nodeValue !== original) {
+        translatedBits.push(`${original} → ${node.nodeValue}`);
+      }
+      if (translatedBits.length >= 6) break;
+    }
+    return {
+      ok: true,
+      url: location.href,
+      host: hostKey(),
+      targetLang,
+      selection: sel,
+      remainingGeorgian: samples,
+      translatedPairs: translatedBits,
+    };
   }
 
   function scheduleDynamicTranslate(delay = 280) {
@@ -505,6 +558,7 @@
 
       restoreApiVisuals();
       mode = "none";
+      clearGeorgianHighlight();
       setStatus("Оригинал восстановлен", "ok");
       return { ok: true };
     } catch (err) {
@@ -517,6 +571,8 @@
 
   async function boot() {
     try {
+      const stored = await chrome.storage.local.get("highlightGeorgian");
+      highlightGeorgian = stored.highlightGeorgian === true;
       const res = await chrome.runtime.sendMessage({
         type: "GET_SETTINGS",
         host: hostKey(),
@@ -527,6 +583,8 @@
       if (powerOn && res.siteEnabled) {
         siteEnabled = true;
         setTimeout(() => translatePage(), 500);
+      } else if (highlightGeorgian) {
+        refreshGeorgianHighlight();
       }
     } catch (err) {
       console.warn("KA-RU boot:", err);
@@ -542,6 +600,10 @@
     if (changes.powerOn) {
       powerOn = changes.powerOn.newValue === true;
       if (!powerOn && siteEnabled) restorePage();
+    }
+    if (changes.highlightGeorgian) {
+      highlightGeorgian = changes.highlightGeorgian.newValue === true;
+      refreshGeorgianHighlight();
     }
   });
 
@@ -576,6 +638,16 @@
       restorePage().then(sendResponse);
       return true;
     }
+    if (message?.type === "GET_REPORT") {
+      sendResponse(buildBadTranslationReport());
+      return;
+    }
+    if (message?.type === "SET_HIGHLIGHT") {
+      highlightGeorgian = message.enabled === true;
+      refreshGeorgianHighlight();
+      sendResponse({ ok: true, highlightGeorgian });
+      return;
+    }
     if (message?.type === "GET_STATUS") {
       sendResponse({
         ok: true,
@@ -584,6 +656,9 @@
         targetLang,
         translating: busy,
         mode,
+        highlightGeorgian,
+        host: hostKey(),
+        remaining: remainingGeorgian(),
       });
     }
   });

@@ -12,9 +12,12 @@ zip -r "$OUT" . \
   -x "*node_modules*" \
   -x "*glossary-data*" \
   -x "*dist*" \
+  -x "*store-assets*" \
   -x "*.DS_Store" \
   -x "*CHROMEWEBSTORE.md" \
   -x "*README.md" \
+  -x "*DEV.md" \
+  -x "*index.html" \
   -x "*.cursor/*" \
   -x "*.agents/*" \
   -x "*scripts/*" \

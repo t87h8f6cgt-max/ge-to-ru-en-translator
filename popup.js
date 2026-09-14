@@ -5,6 +5,11 @@ const langFieldset = document.getElementById("lang");
 const translateBtn = document.getElementById("translate");
 const translatePdfBtn = document.getElementById("translate-pdf");
 const restoreBtn = document.getElementById("restore");
+const reportBtn = document.getElementById("report");
+const alwaysSiteInput = document.getElementById("always-site");
+const siteHostEl = document.getElementById("site-host");
+const siteWrap = document.getElementById("site-wrap");
+const highlightInput = document.getElementById("highlight-ge");
 const statusEl = document.getElementById("status");
 
 function setStatus(text, state = "") {
@@ -17,9 +22,13 @@ function applyPowerUi(on) {
   powerLabel.textContent = on ? "Включено" : "Выключено";
   actionsEl.classList.toggle("is-disabled", !on);
   langFieldset.classList.toggle("is-disabled", !on);
+  siteWrap.classList.toggle("is-disabled", !on);
+  highlightInput.disabled = !on;
+  alwaysSiteInput.disabled = !on;
   translateBtn.disabled = !on;
   translatePdfBtn.disabled = !on;
   restoreBtn.disabled = !on;
+  reportBtn.disabled = !on;
   langFieldset.querySelectorAll("input").forEach((el) => {
     el.disabled = !on;
   });
@@ -54,13 +63,19 @@ async function getActiveTab() {
   return tab;
 }
 
+function hostFromTab(tab) {
+  try {
+    return new URL(tab.url).hostname;
+  } catch {
+    return "";
+  }
+}
+
 function isPdfTab(tab) {
   const url = tab?.url || "";
   if (!url) return false;
-  // http(s) or local file opened in Chrome
   if (!/^(https?|file):/i.test(url)) return false;
   if (/\.pdf($|\?|#)/i.test(url)) return true;
-  // Chrome PDF viewer sometimes keeps path without query
   if (/^file:\/\//i.test(url) && /\.pdf$/i.test(decodeURIComponent(url.split("?")[0]))) {
     return true;
   }
@@ -71,7 +86,7 @@ async function ensureContentScript(tabId) {
   try {
     await chrome.tabs.sendMessage(tabId, { type: "PING" }, { frameId: 0 });
   } catch {
-    // inject into all frames
+    // inject
   }
   try {
     await chrome.scripting.executeScript({
@@ -150,11 +165,29 @@ async function openPdfSidePanel() {
   await chrome.sidePanel.open({ tabId: tab.id });
 }
 
+async function syncSiteToggleFromTab() {
+  const tab = await getActiveTab();
+  const host = hostFromTab(tab);
+  siteHostEl.textContent = host || "сайт недоступен";
+  if (!host || isPdfTab(tab) || !tab?.url || !/^https?:/i.test(tab.url || "")) {
+    alwaysSiteInput.checked = false;
+    alwaysSiteInput.disabled = true;
+    return host;
+  }
+  const data = await chrome.storage.local.get("enabledHosts");
+  alwaysSiteInput.checked = Boolean(data.enabledHosts?.[host]);
+  alwaysSiteInput.disabled = !(await getPower());
+  return host;
+}
+
 async function refreshUi() {
   const on = await getPower();
   const lang = await getTargetLang();
+  const hl = await chrome.storage.local.get("highlightGeorgian");
+  highlightInput.checked = hl.highlightGeorgian === true;
   applyPowerUi(on);
   applyLangUi(lang);
+  await syncSiteToggleFromTab();
   if (!on) {
     setStatus("Расширение выключено");
     return;
@@ -166,8 +199,16 @@ async function refreshUi() {
       return;
     }
     const res = await sendToPage("GET_STATUS");
-    if (res?.enabled) setStatus("Перевод на этом сайте активен", "ok");
-    else setStatus("Включено — можно переводить", "ok");
+    if (res?.enabled) {
+      setStatus(
+        res.remaining
+          ? `Сайт в автопереводе · осталось ka: ${res.remaining}`
+          : "Этот сайт всегда переводится",
+        "ok"
+      );
+    } else {
+      setStatus("Включено — можно переводить", "ok");
+    }
   } catch (err) {
     const msg = String(err?.message || err);
     if (/Это PDF/.test(msg)) setStatus(msg, "ok");
@@ -195,6 +236,7 @@ powerInput.addEventListener("change", async () => {
   } catch {
     setStatus(on ? "Включено" : "Выключено", "ok");
   }
+  await syncSiteToggleFromTab();
 });
 
 langFieldset.addEventListener("change", async (e) => {
@@ -202,6 +244,59 @@ langFieldset.addEventListener("change", async (e) => {
   if (!(input instanceof HTMLInputElement) || input.name !== "targetLang") return;
   await setTargetLang(input.value);
   setStatus(input.value === "en" ? "Язык: English" : "Язык: русский", "ok");
+});
+
+alwaysSiteInput.addEventListener("change", async () => {
+  if (!(await getPower())) {
+    alwaysSiteInput.checked = false;
+    setStatus("Сначала включите расширение", "err");
+    return;
+  }
+  const tab = await getActiveTab();
+  const host = hostFromTab(tab);
+  if (!host) {
+    alwaysSiteInput.checked = false;
+    setStatus("Нет hostname у вкладки", "err");
+    return;
+  }
+  const enabled = alwaysSiteInput.checked;
+  try {
+    await chrome.runtime.sendMessage({
+      type: "SET_SITE_ENABLED",
+      host,
+      enabled,
+    });
+    if (enabled) {
+      const lang = await getTargetLang();
+      setStatus("Включаю автоперевод сайта…");
+      const res = await sendToPage("TRANSLATE_PAGE", { targetLang: lang });
+      if (!res?.ok) throw new Error(res?.error || "Не удалось перевести");
+      setStatus(`Автоперевод для ${host} включён`, "ok");
+    } else {
+      await sendToPage("RESTORE_PAGE");
+      setStatus(`Автоперевод для ${host} выключен`, "ok");
+    }
+  } catch (err) {
+    alwaysSiteInput.checked = !enabled;
+    setStatus(String(err?.message || err), "err");
+  }
+});
+
+highlightInput.addEventListener("change", async () => {
+  const enabled = highlightInput.checked;
+  await chrome.storage.local.set({ highlightGeorgian: enabled });
+  try {
+    await sendToPage("SET_HIGHLIGHT", { enabled });
+    setStatus(
+      enabled ? "Подсветка оставшегося грузинского включена" : "Подсветка выключена",
+      "ok"
+    );
+  } catch {
+    setStatus(
+      enabled ? "Подсветка сохранится на следующей странице" : "Подсветка выключена",
+      "ok"
+    );
+  }
 });
 
 translateBtn.addEventListener("click", async () => {
@@ -223,6 +318,7 @@ translateBtn.addEventListener("click", async () => {
     }
     const res = await sendToPage("TRANSLATE_PAGE", { targetLang: lang });
     if (!res?.ok) throw new Error(res?.error || "Не удалось перевести");
+    await syncSiteToggleFromTab();
     setStatus("Готово (включая вложенные окна/iframe)", "ok");
   } catch (err) {
     setStatus(String(err?.message || err), "err");
@@ -257,11 +353,72 @@ restoreBtn.addEventListener("click", async () => {
   restoreBtn.disabled = true;
   try {
     await sendToPage("RESTORE_PAGE");
-    setStatus("Оригинал (перезагрузка)", "ok");
+    alwaysSiteInput.checked = false;
+    const host = hostFromTab(await getActiveTab());
+    if (host) {
+      await chrome.runtime.sendMessage({
+        type: "SET_SITE_ENABLED",
+        host,
+        enabled: false,
+      });
+    }
+    setStatus("Оригинал восстановлен", "ok");
   } catch (err) {
     setStatus(String(err?.message || err), "err");
   } finally {
     applyPowerUi(await getPower());
+  }
+});
+
+reportBtn.addEventListener("click", async () => {
+  try {
+    const tab = await getActiveTab();
+    let report = {
+      url: tab?.url || "",
+      host: hostFromTab(tab),
+      targetLang: await getTargetLang(),
+      selection: "",
+      remainingGeorgian: [],
+      translatedPairs: [],
+    };
+    try {
+      const res = await sendToPage("GET_REPORT");
+      if (res?.ok) report = { ...report, ...res };
+    } catch (_) {}
+
+    const lines = [
+      "Плохой перевод — GE to RU/EN translator",
+      `URL: ${report.url}`,
+      `Host: ${report.host}`,
+      `Язык: ${report.targetLang}`,
+      "",
+      "Выделение:",
+      report.selection || "(нет)",
+      "",
+      "Оставшийся грузинский:",
+      ...(report.remainingGeorgian?.length
+        ? report.remainingGeorgian.map((s) => `- ${s}`)
+        : ["(нет)"]),
+      "",
+      "Примеры уже переведённого:",
+      ...(report.translatedPairs?.length
+        ? report.translatedPairs.map((s) => `- ${s}`)
+        : ["(нет)"]),
+    ];
+    const body = lines.join("\n");
+    try {
+      await navigator.clipboard.writeText(body);
+    } catch (_) {}
+    const mailto =
+      "mailto:Aikhienvald@icloud.com" +
+      "?subject=" +
+      encodeURIComponent("Bad translation — GE to RU/EN translator") +
+      "&body=" +
+      encodeURIComponent(body.slice(0, 1800));
+    window.open(mailto, "_blank");
+    setStatus("Черновик письма открыт (текст также в буфере)", "ok");
+  } catch (err) {
+    setStatus(String(err?.message || err), "err");
   }
 });
 

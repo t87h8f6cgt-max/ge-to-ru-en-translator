@@ -153,9 +153,59 @@ main {
   margin-top: 2px;
 }
 
+.site-opt {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  cursor: pointer;
+  user-select: none;
+}
+
+.site-opt.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.site-text {
+  display: grid;
+  gap: 2px;
+}
+
+.site-text strong {
+  font-size: 12px;
+}
+
+.site-text small {
+  color: var(--muted);
+  font-size: 11px;
+  word-break: break-all;
+}
+
+.site-opt input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--on);
+}
+
 .actions.is-disabled {
   opacity: 0.45;
   pointer-events: none;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.hint a {
+  color: var(--accent);
 }
 
 button {

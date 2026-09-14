@@ -19,11 +19,22 @@ This is my first Chrome extension. Feedback is welcome — please be kind if som
 
 ## How to use
 
-1. Install the extension from the [Chrome Web Store](https://chrome.google.com/webstore) (listing coming soon) or load it unpacked for testing.  
-2. Click the extension icon and turn the power switch **on**.  
-3. Choose **English** or **Русский**.  
-4. Press **Перевести страницу** — or **Перевести PDF** if you have a PDF open.  
-5. Use **Вернуть оригинал** to restore the page text after on-page translation.
+1. Install from the [Chrome Web Store](https://chromewebstore.google.com/) (search “GE to RU/EN translator”).  
+2. Click the icon → turn power **on** → pick **English** or **Русский**.  
+3. Press **Перевести страницу**, or enable **Всегда переводить этот сайт** so next visits auto-translate.  
+4. Optional: **Подсветить оставшийся грузинский**, right-click **Перевести выделение**, or **Сообщить о плохом переводе**.  
+5. **Вернуть оригинал** restores on-page text.
+
+### FAQ
+
+**Local PDF from disk**  
+`chrome://extensions` → this extension → enable **Allow access to file URLs**, reopen the PDF, then **Перевести PDF**.
+
+**Part of the page still Georgian (iframes)**  
+Gov sites often embed other domains. Wait a moment or press **Перевести страницу** again. Use highlight mode to see leftovers.
+
+**Selection only**  
+Select text → right-click → **Перевести выделение (GE→RU/EN)**.
 
 ### Local PDF files
 
@@ -37,6 +48,7 @@ Full policy: [Privacy Policy](https://t87h8f6cgt-max.github.io/ge-to-ru-en-trans
 
 ## Support
 
+- Support page: https://t87h8f6cgt-max.github.io/ge-to-ru-en-translator/support.html  
 - Email: [Aikhienvald@icloud.com](mailto:Aikhienvald@icloud.com)  
 - Issues: [GitHub Issues](https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues)
 
