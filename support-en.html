@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How to use — GE to RU/EN translator</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1a1210;
+        --muted: #6b5a56;
+        --line: #e8d9d4;
+        --bg: #f7f1ef;
+        --panel: #ffffff;
+        --accent: #e01e37;
+        --accent-ink: #1f4f8a;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.55 system-ui, -apple-system, Segoe UI, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(120% 70% at 0% 0%, rgba(224, 30, 55, 0.08) 0%, transparent 50%),
+          var(--bg);
+      }
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 2.25rem 1.25rem 4rem;
+      }
+      .lang-switch {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.35rem;
+        margin: 0 0 1rem;
+      }
+      .lang-switch a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.4rem;
+        padding: 0.3rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .lang-switch a[aria-current="page"] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      h1 {
+        font-size: 1.55rem;
+        margin: 0 0 0.35rem;
+        letter-spacing: -0.02em;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.92rem;
+        margin: 0 0 1.5rem;
+      }
+      .lead {
+        margin: 0 0 1.25rem;
+        font-size: 1.02rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+        margin: 2rem 0 0.55rem;
+      }
+      h3 {
+        font-size: 1rem;
+        margin: 1.15rem 0 0.35rem;
+      }
+      p,
+      ol,
+      ul {
+        margin: 0.55rem 0;
+      }
+      ol,
+      ul {
+        padding-left: 1.25rem;
+      }
+      li + li {
+        margin-top: 0.35rem;
+      }
+      a {
+        color: var(--accent-ink);
+      }
+      code {
+        font-size: 0.9em;
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .card {
+        margin: 1rem 0;
+        padding: 1rem 1.1rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .card p:first-child {
+        margin-top: 0;
+      }
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+      .toc {
+        margin: 1rem 0 0;
+        padding: 0.9rem 1.1rem;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .toc ul {
+        margin: 0.35rem 0 0;
+        padding-left: 1.1rem;
+      }
+      .tip {
+        margin: 0.75rem 0;
+        padding: 0.75rem 0.9rem;
+        border-left: 3px solid var(--accent);
+        background: rgba(224, 30, 55, 0.06);
+        border-radius: 0 8px 8px 0;
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 2.25rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="lang-switch" aria-label="Language">
+        <a href="support.html">RU</a>
+        <a href="support-en.html" aria-current="page">EN</a>
+      </nav>
+
+      <h1>How to use</h1>
+      <p class="meta">GE to RU/EN translator · Georgian → Russian or English</p>
+
+      <p class="lead">
+        This extension helps you read Georgian websites when there is no decent translation —
+        or the built-in one is broken. Especially useful for government portals, personal
+        accounts, and PDFs.
+      </p>
+
+      <nav class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <ul>
+          <li><a href="#start">Getting started</a></li>
+          <li><a href="#page">Translate a page</a></li>
+          <li><a href="#always">Automatic translation</a></li>
+          <li><a href="#fab">Floating button on the page</a></li>
+          <li><a href="#selection">Selection only</a></li>
+          <li><a href="#pdf">PDF</a></li>
+          <li><a href="#leftover">Leftover Georgian text</a></li>
+          <li><a href="#report">Report a bad translation</a></li>
+          <li><a href="#whats-new">What’s new</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="start">Getting started</h2>
+      <ol>
+        <li>Click the extension icon in the Chrome toolbar.</li>
+        <li>Turn on the main switch (it becomes “On”).</li>
+        <li>Choose the target language: <strong>RU</strong> or <strong>EN</strong>.</li>
+        <li>Press <strong>Translate</strong>.</li>
+      </ol>
+      <p class="tip">
+        The extension icon shows a <strong>RU</strong> or <strong>EN</strong> badge —
+        so you can see which language is selected.
+      </p>
+      <p class="tip">
+        Switch the <strong>interface</strong> language with the RU/EN toggle in the top-right
+        corner of the popup (separate from translation language).
+      </p>
+
+      <h2 id="page">Translate a page</h2>
+      <div class="card">
+        <p>
+          The extension walks the text on the open tab and translates Georgian into the
+          selected language. Pop-ups and many nested blocks on government sites work too.
+        </p>
+        <p>
+          To restore the original text, press <strong>Original</strong> in the popup
+          or the <strong>↩</strong> button on the page.
+        </p>
+      </div>
+
+      <h2 id="always">Automatic translation</h2>
+      <p>
+        After you grant site access once, the extension automatically translates Georgian pages
+        while it is on. You do not need to configure each site separately.
+      </p>
+      <p>
+        To stop automatic translation, turn off the main switch in the extension popup.
+      </p>
+
+      <h2 id="fab">Floating button on the page</h2>
+      <p>A floating button appears in the bottom-left corner:</p>
+      <ul>
+        <li><strong>GE → RU</strong> or <strong>GE → EN</strong> — translate into the selected language;</li>
+        <li><strong>↩</strong> — restore original.</li>
+      </ul>
+      <p>Handy when you don’t want to open the popup every time.</p>
+
+      <h2 id="selection">Selection only</h2>
+      <ol>
+        <li>Select text on the page.</li>
+        <li>Right-click → <strong>Translate selection (GE→RU/EN)</strong>.</li>
+      </ol>
+      <p>The extension must be on. Only the selection is translated, not the whole page.</p>
+
+      <h2 id="pdf">PDF</h2>
+      <p>
+        Open a PDF in a Chrome tab and press <strong>PDF</strong> in the popup.
+        A side panel opens: text is extracted and translated.
+      </p>
+      <p>
+        <strong>Local files (file://)</strong> are blocked by Chrome by default.
+        Allow access once:
+      </p>
+      <ol>
+        <li>Open <code>chrome://extensions</code></li>
+        <li>Find <strong>GE to RU/EN translator</strong></li>
+        <li>Enable <strong>Allow access to file URLs</strong></li>
+        <li>Open the PDF again and press PDF</li>
+      </ol>
+
+      <h2 id="leftover">Leftover Georgian text</h2>
+      <p>
+        This happens on complex sites: text loads later or sits inside nested frames (iframes).
+      </p>
+      <ul>
+        <li>Wait 1–2 seconds and press Translate again.</li>
+        <li>
+          Under <strong>More</strong>, turn on
+          <strong>Highlight leftover ka</strong> — untranslated spots light up.
+        </li>
+        <li>Input fields and text you are typing are intentionally left alone.</li>
+      </ul>
+
+      <h2 id="report">Report a bad translation</h2>
+      <p>
+        Under <strong>More</strong> there is
+        <strong>Report bad translation</strong>.
+        It opens a GitHub issue draft with the page URL and text samples
+        (GitHub account required). The text is also copied to the clipboard so you can send it another way.
+      </p>
+
+      <h2 id="whats-new">What’s new</h2>
+      <h3>2.7.0</h3>
+      <ul>
+        <li>English interface (RU/EN toggle in the popup header)</li>
+        <li>Localized popup, floating button, context menu, and PDF panel</li>
+      </ul>
+      <h3>2.6.0</h3>
+      <ul>
+        <li>Compact popup, site status chip, dark mode</li>
+        <li>Language badge on the icon</li>
+        <li>Floating translate button on the page</li>
+        <li>Gentler handling of input fields</li>
+        <li>Correct Russian plurals (e.g. “5 запросов”)</li>
+      </ul>
+      <h3>2.5.0</h3>
+      <ul>
+        <li>Report bad translation</li>
+        <li>Protect IDs, IBAN, and dates</li>
+        <li>Highlight leftover Georgian</li>
+        <li>Selection translate and Always translate</li>
+      </ul>
+
+      <h2>Contact &amp; privacy</h2>
+      <ul>
+        <li>
+          Email:
+          <a href="mailto:aikhendev@gmail.com">aikhendev@gmail.com</a>
+        </li>
+        <li>
+          Bugs and ideas:
+          <a href="https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator/issues"
+            >GitHub Issues</a
+          >
+        </li>
+        <li>
+          <a href="privacy.html">Privacy policy</a>
+        </li>
+      </ul>
+      <p>Publisher: Aleksandr Anisimov</p>
+
+      <hr />
+      <p class="meta">
+        Repository:
+        <a href="https://github.com/t87h8f6cgt-max/ge-to-ru-en-translator"
+          >github.com/t87h8f6cgt-max/ge-to-ru-en-translator</a
+        >
+      </p>
+    </main>
+  </body>
+</html>

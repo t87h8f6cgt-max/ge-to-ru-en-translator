@@ -102,38 +102,30 @@
         background: rgba(224, 30, 55, 0.06);
         border-radius: 0 8px 8px 0;
       }
-      .crypto-box {
+      .lang-switch {
         display: flex;
-        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.35rem;
+        margin: 0 0 1rem;
+      }
+      .lang-switch a {
+        display: inline-flex;
         align-items: center;
-        gap: 0.6rem;
-        margin: 0.75rem 0;
-        padding: 0.85rem 1rem;
-        background: var(--panel);
+        justify-content: center;
+        min-width: 2.4rem;
+        padding: 0.3rem 0.65rem;
+        border-radius: 999px;
         border: 1px solid var(--line);
-        border-radius: 10px;
+        background: var(--panel);
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none;
       }
-      .crypto-box code {
-        flex: 1 1 12rem;
-        font-size: 0.85rem;
-        word-break: break-all;
-        background: transparent;
-        padding: 0;
-      }
-      .crypto-copy {
-        appearance: none;
-        border: 0;
-        border-radius: 8px;
-        padding: 0.45rem 0.75rem;
-        font: inherit;
-        font-size: 0.85rem;
-        font-weight: 600;
-        cursor: pointer;
-        color: #fff;
+      .lang-switch a[aria-current="page"] {
         background: var(--accent);
-      }
-      .crypto-copy:hover {
-        filter: brightness(1.06);
+        border-color: var(--accent);
+        color: #fff;
       }
       hr {
         border: 0;
@@ -144,6 +136,11 @@
   </head>
   <body>
     <main>
+      <nav class="lang-switch" aria-label="Язык">
+        <a href="support.html" aria-current="page">RU</a>
+        <a href="support-en.html">EN</a>
+      </nav>
+
       <h1>Как пользоваться</h1>
       <p class="meta">GE to RU/EN translator · перевод с грузинского на русский или английский</p>
 
@@ -157,14 +154,13 @@
         <ul>
           <li><a href="#start">С чего начать</a></li>
           <li><a href="#page">Перевод страницы</a></li>
-          <li><a href="#always">Всегда переводить сайт</a></li>
+          <li><a href="#always">Автоматический перевод</a></li>
           <li><a href="#fab">Кнопка на странице</a></li>
           <li><a href="#selection">Только выделенный текст</a></li>
           <li><a href="#pdf">PDF</a></li>
           <li><a href="#leftover">Если что-то осталось на грузинском</a></li>
           <li><a href="#report">Сообщить о плохом переводе</a></li>
           <li><a href="#whats-new">Что нового</a></li>
-          <li><a href="#support-project">Поддержать проект</a></li>
         </ul>
       </nav>
 
@@ -179,6 +175,10 @@
         На иконке расширения появляется бейдж <strong>RU</strong> или <strong>EN</strong> —
         так видно, какой язык выбран сейчас.
       </p>
+      <p class="tip">
+        Язык <strong>интерфейса</strong> меняется переключателем RU/EN в правом верхнем углу
+        popup (это отдельно от языка перевода).
+      </p>
 
       <h2 id="page">Перевод страницы</h2>
       <div class="card">
@@ -192,14 +192,13 @@
         </p>
       </div>
 
-      <h2 id="always">«Переводить всегда»</h2>
+      <h2 id="always">Автоматический перевод</h2>
       <p>
-        Если часто заходите на один и тот же сайт (например, кабинет налогов), включите
-        <strong>«Переводить всегда»</strong>. При следующем визите на этот адрес перевод
-        запустится сам, без лишних кликов.
+        После первого разрешения доступа включённое расширение автоматически переводит
+        грузинские страницы — настраивать каждый сайт отдельно не нужно.
       </p>
       <p>
-        Под галкой видно имя сайта (домен). Выключить можно в любой момент тем же переключателем.
+        Чтобы отключить автоперевод, выключите главный переключатель в окне расширения.
       </p>
 
       <h2 id="fab">Кнопка прямо на странице</h2>
@@ -207,7 +206,7 @@
         В левом нижнем углу страницы появляется плавающая кнопка:
       </p>
       <ul>
-        <li><strong>GE→</strong> — перевести;</li>
+        <li><strong>GE → RU</strong> или <strong>GE → EN</strong> — перевести на выбранный язык;</li>
         <li><strong>↩</strong> — вернуть оригинал.</li>
       </ul>
       <p>Удобно, когда не хочется каждый раз открывать popup.</p>
@@ -255,6 +254,11 @@
       </p>
 
       <h2 id="whats-new">Что нового</h2>
+      <h3>2.7.0</h3>
+      <ul>
+        <li>Английский интерфейс (переключатель RU/EN в шапке popup)</li>
+        <li>Локализация popup, кнопки на странице, меню и PDF-панели</li>
+      </ul>
       <h3>2.6.0</h3>
       <ul>
         <li>Компактное окно, статус сайта, тёмная тема</li>
@@ -270,22 +274,6 @@
         <li>Подсветка оставшегося грузинского</li>
         <li>Перевод выделения и «Переводить всегда»</li>
       </ul>
-
-      <h2 id="support-project">Поддержать проект</h2>
-      <p>
-        Расширение бесплатное. Если оно экономит время — можно сказать спасибо криптой
-        или отзывом в Chrome Web Store. Поддержать можно и прямо из окна расширения
-        (кнопка «Поддержать проект»).
-      </p>
-      <h3>USDT</h3>
-      <p>
-        Сеть только <strong>TRC20 (Tron)</strong>. Другая сеть — средства могут пропасть.
-      </p>
-      <p class="crypto-box">
-        <code id="crypto-addr">TYFV91PyEvUNmoUSb5QHoNtsGVVhy5GS7h</code>
-        <button type="button" id="crypto-copy" class="crypto-copy">Скопировать</button>
-      </p>
-      <p class="meta">Адрес Bybit · USDT · TRC20. Любая сумма — уже помощь.</p>
 
       <h2>Связь и конфиденциальность</h2>
       <ul>
@@ -313,24 +301,5 @@
         >
       </p>
     </main>
-    <script>
-      (function () {
-        const btn = document.getElementById("crypto-copy");
-        const addr = document.getElementById("crypto-addr");
-        if (!btn || !addr) return;
-        btn.addEventListener("click", async () => {
-          const text = addr.textContent.trim();
-          try {
-            await navigator.clipboard.writeText(text);
-            btn.textContent = "Скопировано";
-            setTimeout(() => {
-              btn.textContent = "Скопировать";
-            }, 1600);
-          } catch (_) {
-            btn.textContent = "Выделите адрес";
-          }
-        });
-      })();
-    </script>
   </body>
 </html>
